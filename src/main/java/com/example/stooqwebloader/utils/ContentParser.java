@@ -6,11 +6,11 @@
 package com.example.stooqwebloader.utils;
 
 import com.example.stooqwebloader.domain.Index;
+import com.example.stooqwebloader.domain.Type;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,16 +31,16 @@ public class ContentParser {
         List<String> wigs = new ArrayList<>();
         List<Index> indexes = new ArrayList<>();
         for (String stringLine : lines) {
-            if (stringLine.contains("WIG,") || stringLine.contains("WIG20,")
-                || stringLine.contains("WIG20FUT,") || stringLine.contains("MWIG40,")
-                || stringLine.contains("SWIG80,")) {
+            if (stringLine.contains(Type.WIG + ",") || stringLine.contains(Type.WIG20 + ",")
+                || stringLine.contains(Type.WIG20FUT + ",") || stringLine.contains(Type.MWIG40 + ",")
+                || stringLine.contains(Type.SWIG80 + ",")) {
                 wigs.add(stringLine);
             }
         }
         for (String line : wigs) {
             indexes.add(parseToIndex(line));
         }
-        return new ArrayList<>(filterIndexes(indexes));
+        return filterIndexes(indexes);
     }
 
     private Index parseToIndex(String line) {
@@ -53,7 +53,11 @@ public class ContentParser {
         } catch (ParseException ex) {
             Logger.getLogger(ContentParser.class.getName()).log(Level.SEVERE, null, ex);
         }
-        index.setPrice(Double.parseDouble(data[4]));
+        try {
+            index.setPrice(Double.parseDouble(data[4]));
+        } catch (NumberFormatException ex) {
+            Logger.getLogger(ContentParser.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return index;
     }
 
@@ -70,10 +74,10 @@ public class ContentParser {
                 }
             }
         }
-        for(Index index : toRemove) {
+        for (Index index : toRemove) {
             source.remove(index);
         }
-        return source; 
+        return source;
     }
 
 }

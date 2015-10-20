@@ -1,6 +1,7 @@
 package com.example.stooqwebloader.utils;
 
 import com.example.stooqwebloader.domain.Index;
+import com.example.stooqwebloader.domain.Type;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -31,7 +32,6 @@ public class IndexesFIleWriter {
 
     public void writeToFile(List<Index> indexes) {
         File file = new File("indexes.txt");
-        System.out.println(this);
 
         try {
             if (!file.exists()) {
@@ -57,31 +57,31 @@ public class IndexesFIleWriter {
     private List<Index> updateWigs(List<Index> indexes) {
         List<Index> indexesToWrite = new ArrayList<>();
         for (Index index : indexes) {
-            if (index.getId().equals("WIG")) {
+            if (index.getId().equals(Type.WIG.toString())) {
                 if (lastWIG == null || !Objects.equals(lastWIG, index.getPrice())) {
                     lastWIG = index.getPrice();
                     indexesToWrite.add(index);
                 }
             }
-            if (index.getId().equals("WIG20")) {
+            if (index.getId().equals(Type.WIG20.toString())) {
                 if (lastWIG20 == null || !Objects.equals(lastWIG20, index.getPrice())) {
                     lastWIG20 = index.getPrice();
                     indexesToWrite.add(index);
                 }
             }
-            if (index.getId().equals("MWIG40")) {
+            if (index.getId().equals(Type.MWIG40.toString())) {
                 if (lastMWIG40 == null || !Objects.equals(lastMWIG40, index.getPrice())) {
                     lastMWIG40 = index.getPrice();
                     indexesToWrite.add(index);
                 }
             }
-            if (index.getId().equals("SWIG80")) {
+            if (index.getId().equals(Type.SWIG80.toString())) {
                 if (lastSWIG80 == null || !Objects.equals(lastSWIG80, index.getPrice())) {
                     lastSWIG80 = index.getPrice();
                     indexesToWrite.add(index);
                 }
             }
-            if (index.getId().equals("WIG20FUT")) {
+            if (index.getId().equals(Type.WIG20FUT.toString())) {
                 if (lastWIG20FUT == null || !Objects.equals(lastWIG20FUT, index.getPrice())) {
                     lastWIG20FUT = index.getPrice();
                     indexesToWrite.add(index);
